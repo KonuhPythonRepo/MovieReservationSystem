@@ -5,6 +5,6 @@ class User:
     id : int
     first_name : str
     last_name : str
+    roles : str
     username : str
     password_hash : str
-    roles : str

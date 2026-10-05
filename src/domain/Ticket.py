@@ -9,6 +9,4 @@ class Ticket:
     row: int
     price: int
     user_id: int
-    movie_id: int
-    hall_id: int
-    demonstration_date: date
+    showtime_id: int
