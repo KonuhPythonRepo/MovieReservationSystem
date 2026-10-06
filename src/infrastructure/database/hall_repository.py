@@ -1,7 +1,5 @@
-from shutil import move
-
 import psycopg
-from src.domain.Hall import Hall
+from domain.Hall import Hall
 
 class HallRepository:
     def __init__(self, connection_string):
@@ -24,6 +22,6 @@ class HallRepository:
     def save_hall(self, hall: Hall) -> None:
         with psycopg.connect(self.connection_string) as conn:
             with conn.cursor() as cur:
-                cur.execute("INSERT INTO public.hall (seat_count, is_3d, is_dis_person) VALUES (%s, %s, %s) RETURNING id", ( hall.seat_count, hall.is_3d, hall.is_dis_person))
+                cur.execute("INSERT INTO public.hall (seat_count, is3d, isdisperson) VALUES (%s, %s, %s) RETURNING id", ( hall.seat_count, hall.is_3d, hall.is_dis_person))
                 hall.id = cur.fetchone()[0]
                 conn.commit()

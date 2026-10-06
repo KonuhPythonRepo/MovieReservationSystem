@@ -1,6 +1,6 @@
-from src.domain.User import User
-from src.infrastructure.database.user_repository import UserRepository
-from src.infrastructure.security.hasher import Hasher
+from domain.User import User
+from database.user_repository import UserRepository
+from security.hasher import Hasher
 
 class RegisterUserUseCase:
 

@@ -1,5 +1,5 @@
 import psycopg
-from src.domain.User import User
+from domain.User import User
 
 class UserRepository:
     def __init__(self, connection_string):

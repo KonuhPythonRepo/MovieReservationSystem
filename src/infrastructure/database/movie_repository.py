@@ -1,5 +1,5 @@
 import psycopg
-from src.domain.Movie import Movie
+from domain.Movie import Movie
 
 class MovieRepository:
     def __init__(self, connection_string):
@@ -8,7 +8,7 @@ class MovieRepository:
     def get_by_id(self, id: int) -> Movie | None:
         with psycopg.connect(self.connection_string) as conn:
             with conn.cursor() as cur:
-                cur.execute("SELECT * FROM public.movies WHERE id = %s", (id,))
+                cur.execute("SELECT * FROM public.movie WHERE id = %s", (id,))
                 row = cur.fetchone()
 
                 if not row:
@@ -26,26 +26,26 @@ class MovieRepository:
     def save_movie(self, movie: Movie) -> None:
         with psycopg.connect(self.connection_string) as conn:
             with conn.cursor() as cur:
-                cur.execute("INSERT INTO public.movies (name, description, poster_url, genre, duration) VALUES (%s, %s, %s, %s, %s) returning id;", (movie.name, movie.description, movie.poster_url, movie.genre, movie.duration))
+                cur.execute("INSERT INTO public.movie (name, description, poster_url, genre, duration) VALUES (%s, %s, %s, %s, %s) returning id;", (movie.name, movie.description, movie.poster_url, movie.genre, movie.duration))
                 movie.id = cur.fetchone()[0]
                 conn.commit()
 
     def update_movie(self, movie: Movie) -> None:
         with psycopg.connect(self.connection_string) as conn:
             with conn.cursor() as cur:
-                cur.execute("UPDATE public.movies SET name = %s, description = %s, poster_url = %s, genre = %s, duration = %s where id = %s",(movie.name, movie.description, movie.poster_url, movie.genre, movie.duration, movie.id))
+                cur.execute("UPDATE public.movie SET name = %s, description = %s, poster_url = %s, genre = %s, duration = %s where id = %s",(movie.name, movie.description, movie.poster_url, movie.genre, movie.duration, movie.id))
                 conn.commit()
 
     def delete_movie(self, id: int) -> None:
         with psycopg.connect(self.connection_string) as conn:
             with conn.cursor() as cur:
-                cur.execute("DELETE FROM public.movies WHERE id = %s", (id,))
+                cur.execute("DELETE FROM public.movie WHERE id = %s", (id,))
                 conn.commit()
 
     def get_all_movies(self) -> list[Movie]:
         with psycopg.connect(self.connection_string) as conn:
             with conn.cursor() as cur:
-                cur.execute("SELECT * FROM public.movies")
+                cur.execute("SELECT * FROM public.movie")
                 rows = cur.fetchall()
                 return [
                     Movie(

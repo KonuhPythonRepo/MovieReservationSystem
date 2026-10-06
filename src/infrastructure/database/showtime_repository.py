@@ -2,7 +2,7 @@ import datetime
 
 import psycopg
 
-from src.domain.Showtime import Showtime
+from domain.Showtime import Showtime
 
 
 class ShowTimesRepository:
@@ -26,9 +26,7 @@ class ShowTimesRepository:
     def save_showtime(self, showtime: Showtime) -> None:
         with psycopg.connect(self.connection_string) as conn:
             with conn.cursor() as cur:
-                cur.execute(
-                    "INSERT INTO public.showtimes (movie_id, hall_id, start_time) VALUES (%s, %s, %s) RETURNING id",
-                    (showtime.movie_id, showtime.hall_id, showtime.start_time))
+                cur.execute("INSERT INTO public.showtimes (movie_id,hall_id,start_time) VALUES (%s, %s, %s) RETURNING id",(showtime.movie_id,showtime.hall_id,showtime.start_time))
                 showtime.id = cur.fetchone()[0]
                 conn.commit()
 

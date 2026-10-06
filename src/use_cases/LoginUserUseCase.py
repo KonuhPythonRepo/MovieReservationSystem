@@ -16,6 +16,6 @@ class LoginUserUseCase:
         if not self.hash.verify(password, user.password_hash):
             raise ValueError("Invalid password")
 
-        print("Успешная авторизация")
+        print(f"Успешная авторизация пользователя {user.username}")
         return user
 

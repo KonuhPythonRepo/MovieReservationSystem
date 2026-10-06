@@ -4,7 +4,7 @@ from datetime import date
 
 @dataclass
 class Ticket:
-    id: int
+    id: int | None
     seat: int
     row: int
     price: int

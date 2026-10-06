@@ -1,5 +1,5 @@
 import psycopg
-from src.domain.Ticket import Ticket
+from domain.Ticket import Ticket
 
 class TicketRepository:
     def __init__(self, connection_string):
